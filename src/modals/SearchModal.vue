@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Ref, ref, reactive } from 'vue'
-import { alertOutline, searchOutline } from 'ionicons/icons'
+import { ref, reactive, type Ref } from 'vue'
+import { searchOutline } from 'ionicons/icons'
 
 import {
   IonCardContent,
@@ -8,7 +8,8 @@ import {
   IonButton,
   IonCardTitle,
   IonIcon,
-  IonCardSubtitle,
+  IonImg,
+  IonAvatar,
   IonCard,
   IonCardHeader,
   IonLabel,
@@ -31,13 +32,82 @@ interface SearchResultData {
   updated_at: number
 }
 
-const query: Ref<string> = ref('')
+const searchContent: Ref<string> = ref('')
 
-const result: Ref<SearchResultData[]> = ref([])
+const searchResults: Ref<SearchResultData[]> = ref([
+  {
+    id: 1,
+    user_id: 1,
+    title: '1',
+    description: '1',
+    value: 1,
+    status: '1',
+    created_at: 1,
+    updated_at: 1
+  } as SearchResultData,
+  {
+    id: 2,
+    user_id: 1,
+    title: '1',
+    description: '1',
+    value: 1,
+    status: '1',
+    created_at: 1,
+    updated_at: 1
+  } as SearchResultData,
+  {
+    id: 3,
+    user_id: 1,
+    title: '1',
+    description: '1',
+    value: 1,
+    status: '1',
+    created_at: 1,
+    updated_at: 1
+  } as SearchResultData,
+  {
+    id: 4,
+    user_id: 1,
+    title: '1',
+    description: '1',
+    value: 1,
+    status: '1',
+    created_at: 1,
+    updated_at: 1
+  } as SearchResultData,
+  {
+    id: 5,
+    user_id: 1,
+    title: '1',
+    description: '1',
+    value: 1,
+    status: '1',
+    created_at: 1,
+    updated_at: 1
+  } as SearchResultData,
+  {
+    id: 6,
+    user_id: 1,
+    title: '1',
+    description: '1',
+    value: 1,
+    status: '1',
+    created_at: 1,
+    updated_at: 1
+  } as SearchResultData
+])
 
-function updateQuery(event: InputEvent): void {
-  const content = event.target.value
-  query.value = content
+const searchIonSearchbar = ref()
+function searchIonModalDidPresent() {
+  searchIonSearchbar.value.$el.setFocus()
+}
+
+function searchIonSearchbarIonInput() {
+  // ...
+}
+
+function searchIonButtonClick() {
+  // ...
 }
 
 async function search(): Promise<void> {
@@ -57,7 +127,7 @@ async function search(): Promise<void> {
   }
 }
 
-const searchingStatus: { [key: string]: boolean } = reactive({
+const searchStatus: { [key: string]: boolean } = reactive({
   Fetched: false,
   NotFound: false,
   Searching: false,
@@ -65,74 +135,60 @@ const searchingStatus: { [key: string]: boolean } = reactive({
 })
 
 function switchSearchingStatus(currentStatus: string) {
-  for (const status in searchingStatus) {
-    searchingStatus[status] = status == currentStatus
+  for (const status in searchStatus) {
+    searchStatus[status] = status == currentStatus
   }
 }
 </script>
 
 <template>
-  <ion-modal trigger="search-ion-modal-trigger">
+  <ion-modal trigger="search-ion-modal-trigger" @didPresent="searchIonModalDidPresent">
     <ion-card>
       <ion-card-header>
         <ion-card-title>搜索</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
-        <ion-searchbar @input="updateQuery" />
+        <ion-searchbar
+          ref="searchIonSearchbar"
+          class="ion-margin-bottom"
+          v-model="searchContent"
+          :debounce="1000"
+          inputmode="search"
+          enterkeyhint="search"
+          placeholder="搜索需求"
+          @ion-input="searchIonSearchbarIonInput"
+        />
 
-        <ion-button id="loginpage-login-panel-button" fill="clear" @click="search">
-          <ion-icon :icon="searchOutline" />
+        <ion-button
+          class="search-ion-button ion-justify-content-center"
+          fill="clear"
+          @click="searchIonButtonClick"
+        >
+          <ion-icon aria-hidden :icon="searchOutline" />
           <ion-label>搜索</ion-label>
         </ion-button>
 
-        <ion-spinner v-if="searchingStatus.Searching" />
+        <ion-spinner name="dots" v-if="searchStatus.Searching" />
 
-        <ion-list class="searchpage-result" v-if="searchingStatus.Fetched">
-          <ion-item v-for="item in result" :key="item.id">
-            <ion-card class="searchpage-result-item">
-              <ion-card-title>{{ item.title }}</ion-card-title>
-              <ion-card-subtitle>{{ item.description }}</ion-card-subtitle>
-            </ion-card>
+        <ion-list>
+          <ion-item v-for="searchResult in searchResults" :key="searchResult.id">
+            <ion-avatar slot="start">
+              <ion-img alt="头像" :src="`https://picsum.photos/80/80?random=${searchResult.id}`" />
+            </ion-avatar>
+            <ion-label>
+              <h2>{{ searchResult.title }}</h2>
+              <p>{{ searchResult.description }}</p>
+            </ion-label>
           </ion-item>
         </ion-list>
-        <ion-icon
-          class="searchingpage-network-error"
-          :icon="alertOutline"
-          v-if="searchingStatus.NetworkError"
-        />
-        <div class="searchpage-notfound" v-if="searchingStatus.NotFound">
-          <ion-label>未找到相应的结果</ion-label>
-        </div>
       </ion-card-content>
     </ion-card>
   </ion-modal>
 </template>
 
 <style scoped lang="less">
-ion-modal {
-  --width: fit-content;
-  --height: fit-content;
-  --border-radius: 4px;
-  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
-}
-
-#loginpage-login-panel-button {
+.search-ion-button {
   display: block;
-  justify-content: center;
-}
-
-.searchpage-filter-label {
-  align-self: center;
-}
-.searchingpage-network-error {
-  top: 30%;
-  left: 50%;
-}
-.searchpage-notfound {
-  margin: 36%;
-}
-.searchpage-result-item {
-  padding: 2%;
 }
 </style>
