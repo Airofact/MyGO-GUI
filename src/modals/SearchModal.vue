@@ -8,8 +8,6 @@ import {
   IonButton,
   IonCardTitle,
   IonIcon,
-  IonImg,
-  IonAvatar,
   IonCard,
   IonCardHeader,
   IonLabel,
@@ -18,83 +16,77 @@ import {
   IonList,
   IonItem
 } from '@ionic/vue'
+import TransactionComponent from '@/components/TransactionComponent.vue'
 
 import { get } from '@/libs/http'
-
-interface SearchResultData {
-  id: number
-  user_id: number
-  title: string
-  description: string
-  value: number
-  status: string
-  created_at: number
-  updated_at: number
-}
+import { Transaction } from '@/libs/types'
 
 const searchContent: Ref<string> = ref('')
 
-const searchResults: Ref<SearchResultData[]> = ref([
+const searchResults: Ref<Transaction[]> = ref([
   {
     id: 1,
     user_id: 1,
     title: '1',
     description: '1',
     value: 1,
-    status: '1',
-    created_at: 1,
-    updated_at: 1
-  } as SearchResultData,
+    createdAt: 1,
+    updatedAt: 1
+  } as Transaction,
   {
     id: 2,
     user_id: 1,
-    title: '1',
+    title: '2',
     description: '1',
     value: 1,
-    status: '1',
-    created_at: 1,
-    updated_at: 1
-  } as SearchResultData,
+    createdAt: 1,
+    updatedAt: 1
+  } as Transaction,
   {
     id: 3,
     user_id: 1,
-    title: '1',
+    title: '3',
     description: '1',
     value: 1,
-    status: '1',
-    created_at: 1,
-    updated_at: 1
-  } as SearchResultData,
+    createdAt: 1,
+    updatedAt: 1
+  } as Transaction,
   {
     id: 4,
     user_id: 1,
-    title: '1',
+    title: '4',
     description: '1',
     value: 1,
-    status: '1',
-    created_at: 1,
-    updated_at: 1
-  } as SearchResultData,
+    createdAt: 1,
+    updatedAt: 1
+  } as Transaction,
   {
     id: 5,
     user_id: 1,
-    title: '1',
+    title: '5',
     description: '1',
     value: 1,
-    status: '1',
-    created_at: 1,
-    updated_at: 1
-  } as SearchResultData,
+    createdAt: 1,
+    updatedAt: 1
+  } as Transaction,
   {
     id: 6,
     user_id: 1,
-    title: '1',
+    title: '6',
     description: '1',
     value: 1,
-    status: '1',
-    created_at: 1,
-    updated_at: 1
-  } as SearchResultData
+    createdAt: 1,
+    updatedAt: 1
+  } as Transaction,
+  {
+    id: 7,
+    user_id: 1,
+    title: '7',
+    description: '1',
+    value: 1,
+    createdAt: 1,
+    updatedAt: 1
+  } as Transaction,
 ])
 
 const searchIonSearchbar = ref()
@@ -173,13 +165,7 @@ function switchSearchingStatus(currentStatus: string) {
 
         <ion-list>
           <ion-item v-for="searchResult in searchResults" :key="searchResult.id">
-            <ion-avatar slot="start">
-              <ion-img alt="头像" :src="`https://picsum.photos/80/80?random=${searchResult.id}`" />
-            </ion-avatar>
-            <ion-label>
-              <h2>{{ searchResult.title }}</h2>
-              <p>{{ searchResult.description }}</p>
-            </ion-label>
+            <transaction-component :data="searchResult"/>
           </ion-item>
         </ion-list>
       </ion-card-content>
