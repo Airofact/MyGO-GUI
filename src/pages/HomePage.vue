@@ -13,7 +13,9 @@ import {
   create,
   checkbox
 } from 'ionicons/icons'
+
 import CensorModal from '@/modals/CensorModal.vue';
+import CreateModal from '@/modals/CreateModal.vue';
 
 import { Role } from '@/libs/types'
 import useTokenStore from '@/stores/token';
@@ -44,16 +46,18 @@ const isAdmin = userInfo?.role == Role.ADMIN
                 </ion-card>
               </ion-col>
               <ion-col v-if="isOld||isVolunteer" class="margin-10">
-                <ion-button class="home-functional-ion-button" size="large">
+                <ion-button class="home-functional-ion-button" size="large" id="create-ion-modal-trigger">
                   <ion-icon :icon="create" size="large"/>
                   发布
                 </ion-button>
+                <create-modal/>
               </ion-col>
               <ion-col v-if="isAdmin" class="margin-10">
                 <ion-button class="home-functional-ion-button" size="large" id="censor-ion-modal-trigger">
                   <ion-icon :icon="checkbox" size="large"/>
                   审核
                 </ion-button>
+                <censor-modal/>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -178,7 +182,6 @@ const isAdmin = userInfo?.role == Role.ADMIN
       
     </ion-content>
   </ion-page>
-  <censor-modal/>
 </template>
 
 <style>
