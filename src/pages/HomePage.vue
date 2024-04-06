@@ -9,6 +9,10 @@ import {
   IonContent,
   IonPage
 } from '@ionic/vue'
+import {
+  create,
+  checkbox
+} from 'ionicons/icons'
 import CensorModal from '@/modals/CensorModal.vue';
 
 import { Role } from '@/libs/types'
@@ -30,7 +34,7 @@ const isAdmin = userInfo?.role == Role.ADMIN
           <ion-grid>
             <ion-row>
               <ion-col>
-                <ion-card class="margin-0">
+                <ion-card>
                   <ion-card-header>
                     <ion-card-title>余额 (T)</ion-card-title>
                   </ion-card-header>
@@ -39,11 +43,17 @@ const isAdmin = userInfo?.role == Role.ADMIN
                   </ion-card-content>
                 </ion-card>
               </ion-col>
-              <ion-col v-if="isOld||isVolunteer">
-                <ion-button class="home-functional-ion-button">发布</ion-button>
+              <ion-col v-if="isOld||isVolunteer" class="margin-10">
+                <ion-button class="home-functional-ion-button" size="large">
+                  <ion-icon :icon="create" size="large"/>
+                  发布
+                </ion-button>
               </ion-col>
-              <ion-col v-if="isAdmin">
-                <ion-button id="censor-ion-modal-trigger">审核</ion-button>
+              <ion-col v-if="isAdmin" class="margin-10">
+                <ion-button class="home-functional-ion-button" size="large" id="censor-ion-modal-trigger">
+                  <ion-icon :icon="checkbox" size="large"/>
+                  审核
+                </ion-button>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -166,14 +176,14 @@ const isAdmin = userInfo?.role == Role.ADMIN
         </ion-card-content>
       </ion-card>
       
-      <censor-modal/>
     </ion-content>
   </ion-page>
+  <censor-modal/>
 </template>
 
 <style>
-.margin-0{
-  margin: 0;
+.margin-10{
+  margin: 10px;
 }
 .home-functional-ion-button{
   position: absolute;
