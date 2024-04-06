@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import {
-  IonAccordionGroup,
-  IonAccordion,
-  IonItem,
   IonLabel,
   IonCard,
   IonCardContent,
@@ -12,6 +9,17 @@ import {
   IonContent,
   IonPage
 } from '@ionic/vue'
+import CensorModal from '@/modals/CensorModal.vue';
+
+import { Role } from '@/libs/types'
+import useTokenStore from '@/stores/token';
+
+const userInfo = useTokenStore().userInfo
+
+const isOld = userInfo?.role == Role.OLD
+const isVolunteer = userInfo?.role == Role.VOLUNTEER
+const isAdmin = userInfo?.role == Role.ADMIN
+
 </script>
 
 <template>
@@ -19,16 +27,26 @@ import {
     <ion-content>
       <ion-card>
         <ion-card-content>
-          <ion-accordion-group expand="inset">
-            <ion-accordion>
-              <ion-item slot="header">
-                <ion-label>余额 (T)</ion-label>
-              </ion-item>
-              <ion-item slot="content" lines="none">
-                <ion-label>62.93</ion-label>
-              </ion-item>
-            </ion-accordion>
-          </ion-accordion-group>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-card class="margin-0">
+                  <ion-card-header>
+                    <ion-card-title>余额 (T)</ion-card-title>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <ion-label>62.93</ion-label>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+              <ion-col v-if="isOld||isVolunteer">
+                <ion-button class="home-functional-ion-button">发布</ion-button>
+              </ion-col>
+              <ion-col v-if="isAdmin">
+                <ion-button id="censor-ion-modal-trigger">审核</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-card-content>
       </ion-card>
 
@@ -147,6 +165,20 @@ import {
           </ion-card>
         </ion-card-content>
       </ion-card>
+      
+      <censor-modal/>
     </ion-content>
   </ion-page>
 </template>
+
+<style>
+.margin-0{
+  margin: 0;
+}
+.home-functional-ion-button{
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+}
+</style>
