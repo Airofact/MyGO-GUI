@@ -44,11 +44,11 @@ import SignupModal from '@/modals/SignupModal.vue'
         <ion-toolbar>
           <ion-title slot="start">MyGO</ion-title>
 
-          <ion-buttons class="ion-margin-end" slot="end">
+          <ion-buttons class="ion-margin-end" slot="end"><!-- 
             <ion-button id="search-ion-modal-trigger">
               <ion-icon aria-hidden slot="start" :icon="searchOutline" />
               <ion-label>搜索</ion-label>
-            </ion-button>
+            </ion-button> -->
 
             <ion-button id="login-ion-modal-trigger">
               <ion-icon aria-hidden slot="start" :icon="logInOutline" />

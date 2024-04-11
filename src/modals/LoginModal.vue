@@ -12,12 +12,23 @@ import {
   IonModal,
   IonCard,
   IonLabel,
-  IonInput
+  IonInput,
+modalController
 } from '@ionic/vue'
 
 import { useToken } from '@/stores'
-import http, {HTTP} from '@/libs/http'
-import { AxiosError } from 'axios'
+import http from '@/libs/http'
+
+import SignupModal from './SignupModal.vue'
+
+const loginModal = ref()
+const openSignupModal = async () => {
+    loginModal.value.$el.dismiss(null,'cancel')
+    const modal = await modalController.create({
+      component: SignupModal,
+    });
+    modal.present();
+  };
 
 const passwordIonInput = ref()
 function loginIonModalDidPresent() {
@@ -40,7 +51,7 @@ async function loginIonButtonClick(): Promise<void> {
 </script>
 
 <template>
-  <ion-modal trigger="login-ion-modal-trigger" keep-contents-mounted @didPresent="loginIonModalDidPresent">
+  <ion-modal ref="loginModal" trigger="login-ion-modal-trigger" keep-contents-mounted @didPresent="loginIonModalDidPresent">
     <ion-card>
       <ion-card-header>
         <ion-card-title>登录</ion-card-title>
@@ -69,10 +80,14 @@ async function loginIonButtonClick(): Promise<void> {
           label-placement="stacked"
           clearInput
         />
+        <div class="login-ion-modal-no-account-div">
+          <ion-label>没有账号？<a @click="openSignupModal">注册</a></ion-label>
+        </div>
 
         <ion-button
           class="login-ion-button ion-justify-content-center"
-          fill="clear"
+          expand="block"
+          fill="outline"
           @click="loginIonButtonClick"
         >
           <ion-icon aria-hidden :icon="logInOutline" />
@@ -85,6 +100,10 @@ async function loginIonButtonClick(): Promise<void> {
 
 <style scoped lang="less">
 .login-ion-button {
-  display: block;
+  margin-top: 4%;
+}
+.login-ion-modal-no-account-div{
+  display: flex;
+  justify-content: center;
 }
 </style>

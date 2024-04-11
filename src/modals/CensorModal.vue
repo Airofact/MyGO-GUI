@@ -93,7 +93,7 @@ async function fetchCensoringTransactions() {
 							<transaction-component :data="transaction"/>
 						</ion-item>
 						<div slot="content">
-              <TransactionDetailComponent :data="transaction"/>
+              <transaction-detail-component :data="transaction"/>
 							<ion-button expand="block" color="success">通过</ion-button>
 							<ion-button expand="block" color="danger">驳回</ion-button>
 						</div>

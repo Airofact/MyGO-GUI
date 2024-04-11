@@ -89,7 +89,7 @@ async function signupIonButtonClick(): Promise<void> {
 
         <ion-button
           class="signup-ion-button ion-justify-content-center"
-          fill="clear"
+          fill="outline"
           @click="signupIonButtonClick"
         >
           <ion-icon aria-hidden :icon="personOutline" />
@@ -118,5 +118,8 @@ async function signupIonButtonClick(): Promise<void> {
 <style scoped lang="less">
 .signup-ion-button {
   display: block;
+}
+.signup-role-select{
+  margin-bottom: 6%;
 }
 </style>

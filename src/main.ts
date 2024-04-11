@@ -6,6 +6,6 @@ import pinia from './plugins/pinia'
 
 import App from './App.vue'
 
-import './assets/main.css'
+import './assets/main.less'
 
 createApp(App).use(IonicVue).use(router).use(pinia).mount('#app')

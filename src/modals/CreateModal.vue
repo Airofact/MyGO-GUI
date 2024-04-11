@@ -5,9 +5,12 @@ import { ref, type Ref } from 'vue';
 import { post, HTTP } from '@/libs/http';
 
 const title: Ref<string> = ref("")
-
 const value: Ref<number> = ref(0)
 const content: Ref<string> = ref("")
+
+function IsInvalidContent(){
+	return true//content.value.length == 0
+}
 
 async function postCreateRequest():Promise<boolean>{
 	const data = JSON.stringify({
@@ -33,11 +36,10 @@ function ContentTextAreaInput(event:InputCustomEvent){
 	content.value = event.target.value as string
 	contentIonInput.value.classList.remove('ion-valid');
 	contentIonInput.value.classList.remove('ion-invalid');
-	if(content.value.length>0){
-		contentIonInput.value.classList.add('ion-valid');
+	if(IsInvalidContent()){
+		contentIonInput.value.classList.add('ion-invalid');
 	}
-	contentIonInput.value.classList.add('ion-invalid');
-	console.info("validating")
+	contentIonInput.value.classList.add('ion-valid');
 }
 
 function CreateIonButtonClick(){
@@ -54,7 +56,7 @@ function CounterFormatter(inputLength:number, maxLength:number) {
 	<ion-modal trigger="create-ion-modal-trigger">
 		<ion-card>
 			<ion-card-header>
-				<ion-title>创建需求</ion-title>
+				<ion-card-title>创建需求</ion-card-title>
 			</ion-card-header>
 			<ion-card-content >
 				<ion-input class="margin-y"
