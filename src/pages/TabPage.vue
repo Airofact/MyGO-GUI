@@ -65,24 +65,22 @@ import SignupModal from '@/modals/SignupModal.vue'
 
       <ion-router-outlet />
 
-      <ion-footer>
-        <ion-tab-bar slot="bottom">
-          <ion-tab-button tab="home" href="/home">
-            <ion-icon aria-hidden :icon="homeOutline" />
-            <ion-label>推荐</ion-label>
-          </ion-tab-button>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="home" href="/home">
+          <ion-icon aria-hidden :icon="homeOutline" />
+          <ion-label>推荐</ion-label>
+        </ion-tab-button>
 
-          <ion-tab-button tab="service" href="/service">
-            <ion-icon aria-hidden :icon="peopleOutline" />
-            <ion-label>服务</ion-label>
-          </ion-tab-button>
+        <ion-tab-button tab="service" href="/service">
+          <ion-icon aria-hidden :icon="peopleOutline" />
+          <ion-label>服务</ion-label>
+        </ion-tab-button>
 
-          <ion-tab-button tab="account" href="/account">
-            <ion-icon aria-hidden :icon="personOutline" />
-            <ion-label>我的</ion-label>
-          </ion-tab-button>
-        </ion-tab-bar>
-      </ion-footer>
+        <ion-tab-button tab="account" href="/account">
+          <ion-icon aria-hidden :icon="personOutline" />
+          <ion-label>我的</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
     </ion-tabs>
   </ion-page>
 

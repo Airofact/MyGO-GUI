@@ -16,8 +16,7 @@ import {
 import { HTTP, get } from '@/libs/http'
 
 import { Transaction } from '@/libs/types'
-import TransactionComponent from '@/components/TransactionComponent.vue'
-import DetailModal from '@/modals/DetailModal.vue'
+import TransactionWithDetailComponent from '@/components/TransactionWithDetailComponent.vue'
 
 /**
  * To-do:
@@ -175,16 +174,7 @@ onMounted(async () => {
 				<ion-card-content>
 					<ion-list>
 						<div v-for="transaction in requirements" :key="transaction.id">
-							<ion-button :id="'detail-ion-modal-trigger-'+transaction.id"
-								expand="block"
-								fill="clear"
-								class="detail-trigger-ion-button"
-							>
-								<div class="detail-trigger-ion-button-inner-div">
-									<TransactionComponent :data="transaction"></TransactionComponent>
-								</div>
-							</ion-button>
-							<detail-modal :data="transaction"/>
+							<transaction-with-detail-component :data="transaction"/>
 						</div>
 					</ion-list>
 				</ion-card-content>
@@ -200,13 +190,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.detail-trigger-ion-button-inner-div{
-	display: flex;
-	width: 100%;
-	justify-content: left;
-	text-align: left;
-	gap: 4%;
-}
 .service-page-filter-container{
 	display: flex;
 	gap: 4%;

@@ -23,11 +23,11 @@ import SignupModal from './SignupModal.vue'
 
 const loginModal = ref()
 const openSignupModal = async () => {
-    loginModal.value.$el.dismiss(null,'cancel')
+    await loginModal.value.$el.dismiss(null,'cancel')
     const modal = await modalController.create({
       component: SignupModal,
     });
-    modal.present();
+    await modal.present();
   };
 
 const passwordIonInput = ref()
